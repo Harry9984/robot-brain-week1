@@ -1,6 +1,6 @@
 # HSV tuning log
 
-Final thresholds:
+current best thresholds:
 - range1: (0,170,50) -> (7,255,255)
 - range2: (173,170,50) -> (180,255,255)
 
