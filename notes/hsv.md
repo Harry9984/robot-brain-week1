@@ -7,5 +7,5 @@ Final thresholds:
 Why: skin hue lives in 0-15. Saturation floor 120 let warm light push my face into the mask. Floor 170 + hue 0-7 rejects skin, keeps matte red.
 
 Lighting tests:
-- main light: red=? face=?
-- side lamp: red=? face=?
+- main light: red=YES face=NO
+- side lamp: red=No face=YES
