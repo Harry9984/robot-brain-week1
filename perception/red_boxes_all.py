@@ -10,9 +10,13 @@ try:
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, None)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in contours:
-            if cv2.contourArea(c) > 500:
+            if cv2.contourArea(c) > 10000:
                 x, y, w, h = cv2.boundingRect(c)
+                cx = x + w // 2
+                cy = y + h // 2
                 cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0), 2)
+                cv2.circle(frame, (cx, cy), 4, (0,0,255), -1)
+                cv2.putText(frame, f"({cx},{cy})", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
         cv2.imshow("red", frame)
         if cv2.waitKey(1) == 27: break
 finally:
