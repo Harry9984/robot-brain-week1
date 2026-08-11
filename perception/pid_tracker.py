@@ -32,8 +32,11 @@ try:
                 # Calculate Error (Integer division not needed here, but we cast to int for clean printing)
                 error_x = int(object_cx - screen_center_x)
                 
-                # P-Controller: The multiplier (Kp) is 0.5
-                steering_command = int(error_x * 0.5)
+                # THE DEAD ZONE: If error is less than 20 pixels, stop.
+                if abs(error_x) < 20:
+                    steering_command = 0
+                else:
+                    steering_command = int(error_x * 0.5)
                 
                 # Print the command to the terminal
                 print(f"Error: {error_x} | Steering Command: {steering_command}")
