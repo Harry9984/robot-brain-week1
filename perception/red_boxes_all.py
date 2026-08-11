@@ -1,3 +1,4 @@
+import numpy as np
 import cv2
 cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
 try:
@@ -7,10 +8,12 @@ try:
         hsv = cv2.cvtColor(cv2.GaussianBlur(frame, (5,5), 0), cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, (0,195,50), (7,255,255))
         mask |= cv2.inRange(hsv, (173,195,50), (180,255,255))
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, None)
+        kernel = np.ones((5,5), np.uint8)
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in contours:
-            if cv2.contourArea(c) > 10000:
+            if cv2.contourArea(c) > 500:
                 x, y, w, h = cv2.boundingRect(c)
                 cx = x + w // 2
                 cy = y + h // 2
