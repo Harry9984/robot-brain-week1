@@ -8,7 +8,7 @@ try:
         hsv = cv2.cvtColor(cv2.GaussianBlur(frame, (5,5), 0), cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, (0,195,50), (7,255,255))
         mask |= cv2.inRange(hsv, (173,195,50), (180,255,255))
-        kernel = np.ones((5,5), np.uint8)
+        kernel = np.ones((21,21), np.uint8)
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -21,6 +21,7 @@ try:
                 cv2.circle(frame, (cx, cy), 4, (0,0,255), -1)
                 cv2.putText(frame, f"({cx},{cy})", (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
         cv2.imshow("red", frame)
+        cv2.imshow("mask", mask)
         if cv2.waitKey(1) == 27: break
 finally:
     cap.release(); cv2.destroyAllWindows()
