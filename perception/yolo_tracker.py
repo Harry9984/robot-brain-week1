@@ -2,6 +2,8 @@ import cv2
 import math
 import numpy as np
 import time
+import csv
+from datetime import datetime
 from ultralytics import YOLO
 
 # Load YOLOv8 Nano (downloads automatically the first time)
@@ -16,6 +18,9 @@ try:
     cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
     last_x, last_y, last_w, last_h = -1, -1, -1, -1
     last_thought_time = time.time()
+    log_file = open("data/mission_log.csv", "w", newline="")
+    log_writer = csv.writer(log_file)
+    log_writer.writerow(["timestamp", "state", "distance_cm", "error_px", "command"])
 
     while True:
         ret, frame = cap.read()
@@ -29,8 +34,12 @@ try:
         results = model(frame, verbose=False)
         
         screen_center_x = frame.shape[1] // 2
+        
+        # DEFAULT STATE (Initialize variables so Python doesn't crash when blind)
         steering_command = 0
-        state = "SEARCHING"
+        error_x = 0
+        distance_cm = 0.0
+        state = "SEARCHING"		
         
         # Find the bottle
         target_box = None
@@ -98,6 +107,10 @@ try:
                 print(f"[CORTEX] Target acquired at {distance_cm:.1f}cm. Initiating grab sequence.")
             else:
                 print(f"[CORTEX] Tracking target. Distance: {distance_cm:.1f}cm. Error: {error_x}px.")
+
+            # WRITE TO BLACK BOX
+            timestamp = datetime.now().strftime("%H:%M:%S")
+            log_writer.writerow([timestamp, state, distance_cm, error_x, steering_command])
         
         if cv2.waitKey(1) & 0xFF == 27:
             break
@@ -105,3 +118,5 @@ try:
 finally:
     cap.release()
     cv2.destroyAllWindows()
+    if 'log_file' in locals():
+        log_file.close()
