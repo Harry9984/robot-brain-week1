@@ -24,7 +24,7 @@ df = df.drop_duplicates()
 df['score'] = df['score'].fillna(df['score'].mean())
 
 # Law 3: Force all dates into one standard format
-df['date'] = pd.to_datetime(df['date'], errors='coerce')
+df['date'] = pd.to_datetime(df['date'], format='mixed', errors='coerce')
 
 print("\n--- CLEANED DATA ---")
 print(df)
