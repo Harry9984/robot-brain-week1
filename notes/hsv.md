@@ -16,3 +16,9 @@ Discovered the difference between emitting light (phone screen) and reflecting l
 The Limit of HSV:
 Raised saturation to 195 to reject orange. This shattered real-world 3D objects into fragmented pieces because physical reflections drop below 195 saturation. Morphological closing (21x21 kernel) failed to bridge the massive gaps. Lowered back to 160 and raised area threshold to 2000. 
 Conclusion: Pure color thresholding is a toy technique. It fails on 3D objects under mixed ambient light. Future upgrades must use shape/texture (Neural Networks).
+
+BUSINESS LOG - PLATFORM RISK:
+Upwork consumed all 35 Connects as an ID verification fee.
+Lesson 1: Sunk cost. Do not mourn, do not re-buy from food money.
+Lesson 2: Never depend on one platform. Open zero-cost channels (Fiverr, Reddit).
+Lesson 3: Reload rule - Connects only from surplus, $5.25 custom amount, never $15 default.
