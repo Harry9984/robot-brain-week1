@@ -1,6 +1,7 @@
 import cv2
 import math
 import numpy as np
+import time
 from ultralytics import YOLO
 
 # Load YOLOv8 Nano (downloads automatically the first time)
@@ -14,6 +15,7 @@ FOCAL_LENGTH = 1110.0      # The constant you calibrated in Layer 0
 try:
     cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
     last_x, last_y, last_w, last_h = -1, -1, -1, -1
+    last_thought_time = time.time()
 
     while True:
         ret, frame = cap.read()
@@ -84,6 +86,18 @@ try:
         
         cv2.imshow("YOLO MUSCLE", motor_frame)
         cv2.imshow("YOLO EYES", frame)
+
+        # THE CORTEX (1Hz Strategic Think Loop)
+        current_time = time.time()
+        if current_time - last_thought_time >= 1.0: # Think once per second
+            last_thought_time = current_time
+            
+            if state == "SEARCHING":
+                print("[CORTEX] I am blind. Executing search pattern.")
+            elif state == "ARRIVED":
+                print(f"[CORTEX] Target acquired at {distance_cm:.1f}cm. Initiating grab sequence.")
+            else:
+                print(f"[CORTEX] Tracking target. Distance: {distance_cm:.1f}cm. Error: {error_x}px.")
         
         if cv2.waitKey(1) & 0xFF == 27:
             break
