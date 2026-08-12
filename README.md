@@ -27,3 +27,15 @@ Context-aware state transitions that override low-level control when mission goa
 ```bash
 source .venv/bin/activate
 python perception/brain_states.py
+
+## Income Tools (Data & Scraping)
+In addition to the robotics perception stack, this repository contains deployable tools for data engineering and automation tasks:
+
+- `tools/broken_scraper.py`: Demonstrates fixing unescaped CSV commas using Python's built-in `csv` module.
+- `tools/quotes_scraper.py`: A robust web scraper using `requests` and `BeautifulSoup` to extract structured data into clean CSVs.
+- `tools/data_cleaner.py`: A `pandas` pipeline to deduplicate rows, fill missing numeric values, and standardize mixed-format dates.
+
+### How to run the tools
+```bash
+pip install -r requirements.txt
+python tools/data_cleaner.py
